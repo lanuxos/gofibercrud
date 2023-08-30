@@ -1,0 +1,22 @@
+# docker-compose up -d
+# to connect to Postgresql host use 'host.docker.internal'
+version: '3'
+services:
+  postgres:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - '3361:3360'
+    volumes:
+      - progresDB:/data/mysql
+    env_file:
+      - ./app.env
+  pgAdmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    env_file:
+      - ./app.env
+    ports:
+      - "8080:80"
+volumes:
+  progresDB:
