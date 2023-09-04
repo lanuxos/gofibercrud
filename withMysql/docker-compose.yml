@@ -14,9 +14,9 @@ services:
       MYSQL_DATABASE: gofibercrudwithmysql
       MYSQL_USER: mysqluser
       MYSQL_PASSWORD: mysqlpassword
-    networks:
-      mysql:
-        ipv4_address: 192.168.1.11
+    # networks:
+    #   mysql:
+    #     ipv4_address: 192.168.1.11
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: phpmyadmin
