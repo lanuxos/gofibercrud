@@ -1,22 +1,33 @@
 # docker-compose up -d
-# to connect to Postgresql host use 'host.docker.internal'
+# to check ip use cmd: docker inspect mysql
 version: '3'
 services:
-  postgres:
+  mysql:
     image: mysql:latest
     container_name: mysql
     ports:
-      - '3361:3360'
+      - '6033:3306'
     volumes:
-      - progresDB:/data/mysql
-    env_file:
-      - ./app.env
-  pgAdmin:
-    image: phpmyadmin
+      - dbdata:/data/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlrootpassword
+      MYSQL_DATABASE: gofibercrudwithmysql
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: mysqlpassword
+    networks:
+      mysql:
+        ipv4_address: 192.168.1.11
+  phpmyadmin:
+    image: phpmyadmin:latest
     container_name: phpmyadmin
-    env_file:
-      - ./app.env
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
     ports:
       - "8080:80"
+    restart: always
 volumes:
-  progresDB:
+  dbdata:
